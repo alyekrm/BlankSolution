@@ -9,9 +9,9 @@ namespace Business.Concrete
 {
     public class BusinessManager : IBusiness
     {
-        IService _manager;
+        ICarDal _manager;
 
-        public BusinessManager(IService manager)
+        public BusinessManager(ICarDal manager)
         {
             _manager = manager;
         }
@@ -34,6 +34,16 @@ namespace Business.Concrete
         public List<Car> GetByld(Car car)
         {
             return _manager.GetByld(car);
+        }
+
+        public List<Car> GetCarsByBrandId(int id)
+        {
+            return _manager.GetAll(p => p.BrandId == id);
+        }
+
+        public List<Car> GetCarsByColorId(int id)
+        {
+            return _manager.GetAll(p => p.ColorId == id);
         }
 
         public void Update(Car car)

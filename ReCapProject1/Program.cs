@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,37 +11,45 @@ namespace ReCapProject1
     {
         static void Main(string[] args)
         {
-            BusinessManager businessManger = new BusinessManager(new Manager());
+            BusinessManager businessManager = new BusinessManager(new EfCarDal());
 
             Console.WriteLine("GetALL");
-            businessManger.GetAll();
-            foreach (var item in businessManger.GetAll())
+            
+
+            foreach (var item in businessManager.GetAll())
             {
-                Console.WriteLine(item.DailyPrice);
+                Console.WriteLine(item.Name);
             }
 
-            Car nCar = new Car() { Id = 9, BrandId = "1", ColorId = "1", DailyPrice = 150.0, Description = "EcoVan", ModelYear = "2018" };
-            businessManger.Add(nCar);
-            foreach (var item in businessManger.GetAll())
+            Car car = new Car() { Name = "a" };
+            businessManager.Add(car);
+            car.Name = "abc";
+            car.DailyPrice = 0;
+            businessManager.Add(car);
+            
+            car.DailyPrice = 111;
+         
+            foreach (var item in businessManager.GetAll())
             {
-                Console.WriteLine(item.DailyPrice);
+                var id = item.Id;
+                car.Id = id + 1;
+            }
+            
+            businessManager.Add(car);
+            foreach (var item in businessManager.GetAll())
+            {
+                Console.WriteLine(item.Name);
+            }
+            Console.WriteLine("Get By Id");
+            foreach (var item in businessManager.GetCarsByBrandId(1))
+            {
+                Console.WriteLine( "{1},{0}" ,item.Name,item.Id);
             }
 
-            Console.WriteLine("GetById");
-            businessManger.GetByld(nCar);
-            Car yCar = new Car() { Id = 9, BrandId = "2", ColorId = "2", DailyPrice = 2150.0, Description = "EEcoVan", ModelYear = "2018" };
-            Console.WriteLine("Update");
-            businessManger.Update(yCar);
-            foreach (var item in businessManger.GetAll())
+            Console.WriteLine("Get By Color Id");
+            foreach (var item in businessManager.GetCarsByColorId(1))
             {
-                Console.WriteLine(item.DailyPrice);
-            }
-
-            businessManger.Delete(yCar);
-            Console.WriteLine("Delete");
-            foreach (var item in businessManger.GetAll())
-            {
-                Console.WriteLine(item.DailyPrice);
+                Console.WriteLine("{1},{0}", item.Name, item.Id);
             }
         }
     }
