@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ReCapProject1
 {
@@ -15,11 +16,11 @@ namespace ReCapProject1
 
 
             Console.WriteLine("GetALL");
-            
+
 
             foreach (var item in businessManager.GetCarDetails())
             {
-                Console.WriteLine("{0},{1},{2},{3}",item.CarName,item.BrandName,item.ColorName,item.DailyPrice);
+                Console.WriteLine("{0},{1},{2},{3}", item.CarName, item.BrandName, item.ColorName, item.DailyPrice);
             }
 
             Car car = new Car() { Name = "a" };
@@ -39,12 +40,30 @@ namespace ReCapProject1
             }
   
             businessManager.Add(car);
-          
+            Console.WriteLine("------Added-------");
+
             foreach (var item in businessManager.GetCarDetails())
             {
                 Console.WriteLine("{0},{1},{2},{3}", item.CarName, item.BrandName, item.ColorName, item.DailyPrice);
             }
+            businessManager.Delete(car);
 
+            Console.WriteLine("-----Deleted-----");
+
+            foreach (var item in businessManager.GetCarDetails())
+            {
+                Console.WriteLine("{0},{1},{2},{3}", item.CarName, item.BrandName, item.ColorName, item.DailyPrice);
+            }
+            
+      
+            Console.WriteLine("-----Updated-----");
+
+            businessManager.Update(new Car { Id = 5, Name = "xxx", BrandId = 1,ColorId=1,DailyPrice=00 });
+
+            foreach (var item in businessManager.GetCarDetails())
+            {
+                Console.WriteLine("{0},{1},{2},{3}", item.CarName, item.BrandName, item.ColorName, item.DailyPrice);
+            }
         }
     }
 }
