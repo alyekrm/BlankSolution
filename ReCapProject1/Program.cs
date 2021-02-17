@@ -13,12 +13,13 @@ namespace ReCapProject1
         {
             BusinessManager businessManager = new BusinessManager(new EfCarDal());
 
+
             Console.WriteLine("GetALL");
             
 
-            foreach (var item in businessManager.GetAll())
+            foreach (var item in businessManager.GetCarDetails())
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine("{0},{1},{2},{3}",item.CarName,item.BrandName,item.ColorName,item.DailyPrice);
             }
 
             Car car = new Car() { Name = "a" };
@@ -26,31 +27,24 @@ namespace ReCapProject1
             car.Name = "abc";
             car.DailyPrice = 0;
             businessManager.Add(car);
-            
+
             car.DailyPrice = 111;
-         
+            car.BrandId = 1;
+            car.ColorId = 1;
+
             foreach (var item in businessManager.GetAll())
             {
                 var id = item.Id;
                 car.Id = id + 1;
             }
-            
+  
             businessManager.Add(car);
-            foreach (var item in businessManager.GetAll())
+          
+            foreach (var item in businessManager.GetCarDetails())
             {
-                Console.WriteLine(item.Name);
-            }
-            Console.WriteLine("Get By Id");
-            foreach (var item in businessManager.GetCarsByBrandId(1))
-            {
-                Console.WriteLine( "{1},{0}" ,item.Name,item.Id);
+                Console.WriteLine("{0},{1},{2},{3}", item.CarName, item.BrandName, item.ColorName, item.DailyPrice);
             }
 
-            Console.WriteLine("Get By Color Id");
-            foreach (var item in businessManager.GetCarsByColorId(1))
-            {
-                Console.WriteLine("{1},{0}", item.Name, item.Id);
-            }
         }
     }
 }
