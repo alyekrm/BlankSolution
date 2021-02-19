@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constrants;
+using Core.Utilies.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -17,44 +19,48 @@ namespace Business.Concrete
             _manager = manager;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             _manager.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _manager.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
+
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _manager.GetAll();
+            return new SuccessDataResult<List<Car>>(Messages.CarListed,_manager.GetAll());
         }
 
-        public List<Car> GetByld(Car car)
+        public IDataResult<List<Car>> GetByld(Car car)
         {
-            return _manager.GetByld(car);
+            return new SuccessDataResult<List<Car>>(Messages.CarListed,_manager.GetByld(car));
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _manager.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(Messages.CarListed,_manager.GetCarDetails());
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return _manager.GetAll(p => p.BrandId == id);
+            return new SuccessDataResult<List<Car>>(Messages.CarListed,_manager.GetAll(p => p.BrandId == id));
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return _manager.GetAll(p => p.ColorId == id);
+            return new SuccessDataResult<List<Car>>(Messages.CarListed,_manager.GetAll(p => p.ColorId == id));
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             _manager.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
         
     }
