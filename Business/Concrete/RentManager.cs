@@ -41,6 +41,17 @@ namespace Business.Concrete
 
         }
 
+        public IResult CarReturn(int id)
+        {
+            
+            var rentData = _manager.Get(p=>p.CarId==id);
+            
+            rentData.ReturnDate = DateTime.Now;
+
+            _manager.Update(rentData);
+            return new SuccessResult(Messages.CarReturn);
+        }
+
         public IResult Delete(Rental rental)
         {
             _manager.Delete(rental);
@@ -53,13 +64,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(Messages.ListRents, _manager.GetAll());
         }
 
-        public IDataResult<Rental> GetById(Rental rental)
+        public IDataResult<Rental> GetById(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Rental>(Messages.ListRents, _manager.Get(p => p.CarId == id));
         }
 
         public IResult Update(Rental rental)
         {
+            
             _manager.Update(rental);
             return new SuccessResult(Messages.RentRecordUpdated);
         }

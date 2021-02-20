@@ -37,9 +37,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(Messages.CarListed,_manager.GetAll());
         }
 
-        public IDataResult<List<Car>> GetByld(Car car)
+        public IDataResult<Car> GetByld(int id)
         {
-            return new SuccessDataResult<List<Car>>(Messages.CarListed,_manager.GetByld(car));
+            return new SuccessDataResult<Car>(Messages.CarListed,_manager.Get(p=>p.Id==id));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()

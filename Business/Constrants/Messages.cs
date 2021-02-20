@@ -19,5 +19,6 @@ namespace Business.Constrants
         public static string RentRecordUpdated = "Araç kiralama kaydı güncellendi";
         public static string RentOutFail="Araç henüz iade edilmemiş";
         public static string ListRents="Kiralama kayıtları listelendi";
+        public static string CarReturn="Araç iade edildi";
     }
 }
