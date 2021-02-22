@@ -15,12 +15,7 @@ namespace DataAccess.Concrete
 
         public Manager()
         {
-           // _cars = new List<Car>{
-
-           //     new Car{Id=1,BrandId="1",ColorId="1",DailyPrice=1000.0,Description="Eco",ModelYear="2020"},
-           //     new Car{Id=2,BrandId="1",ColorId="3",DailyPrice=2000.0,Description="Family",ModelYear="2019"},
-           //     new Car{Id=3,BrandId="1",ColorId="2",DailyPrice=2500.0,Description="Sport",ModelYear="2018"}
-           //};
+          
         }
 
         public void Add(Car car)
@@ -53,6 +48,11 @@ namespace DataAccess.Concrete
         {
             var Filtered = _cars.Where(c => c.BrandId == car.BrandId).ToList();
             return Filtered;
+        }
+
+        public Car GetLast(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Car car)

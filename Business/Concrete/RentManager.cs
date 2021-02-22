@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constrants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcers.Validation;
 using Core.Utilies.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,23 +24,18 @@ namespace Business.Concrete
             _manager = manager;
         }
 
+
+        //[ValidationAspect(typeof(RentValidator))] validator içinde veritabanından gelen rental verisine erişim returndate sorgulamasından sonra aktif olacak
+
         public IResult Add(Rental rental)
         {
 
+
             List<Rental> carStatus = _manager.GetAll(c => c.CarId == rental.CarId);
-            
+
             foreach (var item in carStatus)
             {
-
-                var context = new ValidationContext<Rental>(item);
-                RentValidator rentValidator = new RentValidator();
-                var result = rentValidator.Validate(item);
-                rental.CustomerId = item.CustomerId;
-                
-                if (result.IsValid)
-                {
-                    throw new ValidationException(result.Errors);
-                }
+                ValidationTool.Validate(new RentValidator(), item);
             }
             rental.RentDate = DateTime.Now;
 
@@ -47,16 +44,28 @@ namespace Business.Concrete
 
         }
 
-        public IResult CarReturn(int id)
+        public IResult CarReturn(Rental rental)
         {
-            
-            var rentData = _manager.Get(p=>p.CarId==id);
-            
-            rentData.ReturnDate = DateTime.Now;
 
-            _manager.Update(rentData);
+            List<Rental> rentData = _manager.GetAll(p => p.CarId == rental.CarId  );
+
+            foreach (var item in rentData)
+            {
+                if (item.ReturnDate == null)
+                {
+                    item.ReturnDate = DateTime.Now;
+                    _manager.Update(item);
+                }
+            }
+
+
+            //rental.ReturnDate = DateTime.Now;
+
+            //_manager.Update(rental);
             return new SuccessResult(Messages.CarReturn);
         }
+
+
 
         public IResult Delete(Rental rental)
         {
@@ -66,7 +75,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Rental>> GetAll()
         {
-           
+
             return new SuccessDataResult<List<Rental>>(Messages.ListRents, _manager.GetAll());
         }
 
@@ -77,7 +86,7 @@ namespace Business.Concrete
 
         public IResult Update(Rental rental)
         {
-            
+
             _manager.Update(rental);
             return new SuccessResult(Messages.RentRecordUpdated);
         }

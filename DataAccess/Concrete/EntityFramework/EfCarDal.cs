@@ -13,28 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, RentContext>, ICarDal
     {
-        public void Add(Car car)
-        {
-            
-            if (car.Name.Length < 2 )
-            {
-                Console.WriteLine("Araba ismi minimum 2 karakter olmalıdır");
-            }
-            else if(car.DailyPrice <= 0)
-            {
-                Console.WriteLine("Araba günlük fiyatı 0'dan büyük olmalıdır.");
-            }
-            else
-            {
-                using (RentContext context = new RentContext())
-                {
-                    var addedCar = context.Entry(car);
-                    addedCar.State = EntityState.Added;
-                    context.SaveChanges();
-                }
-            }           
-        }
-
+      
         public List<CarDetailDto> GetCarDetails()
         {
             using (RentContext rentContext=new RentContext())

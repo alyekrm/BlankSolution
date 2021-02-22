@@ -54,9 +54,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("rentReturn")]
-        public IActionResult RentReturn(int id)
+        public IActionResult RentReturn(Rental rental)
         {
-            var result = _rentManager.CarReturn(id);
+            var result = _rentManager.CarReturn(rental);
             if (result.Success)
             {
                 return Ok(result);
