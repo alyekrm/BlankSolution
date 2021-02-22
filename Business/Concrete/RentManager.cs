@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
 using Business.Constrants;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilies.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,15 +29,19 @@ namespace Business.Concrete
             
             foreach (var item in carStatus)
             {
+
+                var context = new ValidationContext<Rental>(item);
+                RentValidator rentValidator = new RentValidator();
+                var result = rentValidator.Validate(item);
+                rental.CustomerId = item.CustomerId;
                 
-                if (item.ReturnDate.ToString() == "1.01.0001 00:00:00")
+                if (result.IsValid)
                 {
-                    
-                    
-                    return new ErrorResult(Messages.RentOutFail);
+                    throw new ValidationException(result.Errors);
                 }
             }
             rental.RentDate = DateTime.Now;
+
             _manager.Add(rental);
             return new SuccessResult(Messages.CarRented);
 

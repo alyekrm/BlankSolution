@@ -14,8 +14,8 @@ namespace Entities.Concrete
 
         public int CustomerId { get; set; }
 
-        public DateTime RentDate { get; set ; }
+        public DateTime? RentDate { get; set ; }
 
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
     }
 }
