@@ -83,7 +83,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public IResult UploadImage([FromForm] FileUpload fileUpload,int id )
+        public IResult UploadImage([FromForm] Entities.Concrete.FileUpload fileUpload,int id )
         {
 
             CarImage carImage = new CarImage() {CarId=id,Date=DateTime.Now };
