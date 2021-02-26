@@ -17,8 +17,12 @@ namespace Business.Constrants
         public static string CarRented = "Araç kiralandı";
         public static string RentRecordDeleted = "Araç kiralama kaydı silindi";
         public static string RentRecordUpdated = "Araç kiralama kaydı güncellendi";
-        public static string RentOutFail="Araç henüz iade edilmemiş";
-        public static string ListRents="Kiralama kayıtları listelendi";
-        public static string CarReturn="Araç iade edildi";
+        public static string RentOutFail = "Araç henüz iade edilmemiş";
+        public static string ListRents = "Kiralama kayıtları listelendi";
+        public static string CarReturn = "Araç iade edildi";
+        public static string CarImageAdded = "Araç resmi eklendi";
+        public static string CarImageDeleted = "Araç resmi silindi";
+        public static string CarImageUpdated = "Araç resmi güncellendi";
+        public static string MaxCarImageError="Bir araç için en fazla beş resim yüklenebilir";
     }
 }

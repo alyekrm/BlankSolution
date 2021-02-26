@@ -1,6 +1,5 @@
 ﻿using Castle.DynamicProxy;
 using System;
-using static Core.Utilies.Interceptors.Class1;
 
 namespace Core.Utilies.Interceptors
 {
