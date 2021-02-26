@@ -94,6 +94,7 @@ namespace Business.Concrete
             {
                 string path = hostEnvironment.ContentRootPath + $@"\uploads\";
 
+
                 string guidName = Guid.NewGuid().ToString();
 
                 string extension = Path.GetExtension(fileUpload.Files.FileName);
