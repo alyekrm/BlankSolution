@@ -18,18 +18,18 @@ namespace WebAPI.Controllers
     public class CarImagesController : ControllerBase
     {
         ICarImage _manager;
-        public static IWebHostEnvironment _webHostEnviorement;
+       
 
-        public CarImagesController(ICarImage manager, IWebHostEnvironment webHostEnviorement)
+        public CarImagesController(ICarImage manager)
         {
             _manager = manager;
-            _webHostEnviorement = webHostEnviorement;
+           
         }
 
         [HttpPost("uploadimage")]
         public IActionResult UploadImage([FromForm]FileUpload fileUpload,[FromForm]int id)
         {
-            var result=_manager.UploadImage(fileUpload,id, _webHostEnviorement);           
+            var result=_manager.UploadImage(fileUpload,id);           
 
             if (result.Success)
             {

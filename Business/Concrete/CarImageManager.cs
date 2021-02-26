@@ -83,7 +83,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public IResult UploadImage([FromForm] FileUpload fileUpload,int id ,IHostEnvironment hostEnvironment)
+        public IResult UploadImage([FromForm] FileUpload fileUpload,int id )
         {
 
             CarImage carImage = new CarImage() {CarId=id,Date=DateTime.Now };
@@ -92,7 +92,7 @@ namespace Business.Concrete
             
             if (result.Success)
             {
-                string path = hostEnvironment.ContentRootPath + $@"\uploads\";
+                string path = _hostEnvironment.ContentRootPath + $@"\uploads\";
 
 
                 string guidName = Guid.NewGuid().ToString();
@@ -114,6 +114,8 @@ namespace Business.Concrete
 
                 }
                 _manager.Add(carImage);
+                return new SuccessResult(Messages.CarImageAdded);
+                
             }
             return new ErrorResult(Messages.MaxCarImageError);
 

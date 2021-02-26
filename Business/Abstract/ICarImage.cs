@@ -14,7 +14,7 @@ namespace Business.Abstract
     public interface ICarImage
     {
       
-        IResult UploadImage([FromForm] FileUpload fileUpload,int id, IHostEnvironment hostEnvironment);
+        IResult UploadImage([FromForm] FileUpload fileUpload,int id);
 
         IDataResult<List<CarImage>> GetAll(CarImage carImage);
 
