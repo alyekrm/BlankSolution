@@ -1,18 +1,24 @@
-﻿using Autofac;
+﻿
+using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
+
 using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Utilies.Interceptors;
+using Core.Utilies.Security.JWT;
+
+
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.DependencyResolvers.Autofac
 {
-    public class AutofacBusinessModule:Module
+    public class AutofacBusinessModule :Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -28,8 +34,21 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CarImageManager>().As<ICarImage>();
 
-           
-            
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+            builder.RegisterType<UserManager>().As<IUserService>();
+
+            builder.RegisterType<AuthManager>().As<IAuthService>();
+
+            builder.RegisterType<JwHelper>().As<ITokenHelper>();
+
+
+
+
+
+
+
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

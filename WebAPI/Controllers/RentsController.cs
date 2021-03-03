@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,6 +22,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("addRent")]
+
         public IActionResult AddRent(Rental rent)
         {
             var result = _rentManager.Add(rent);
@@ -65,6 +67,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
+        [Authorize(Roles ="rent.list")]
         public IActionResult GetAll()
         {
             var result = _rentManager.GetAll();
